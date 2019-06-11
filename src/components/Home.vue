@@ -8,7 +8,6 @@
     {{currentUserName}}<i class="el-icon-arrow-down el-icon--right home_userinfo"></i>
   </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="MyArticle">我的文章</el-dropdown-item>
             <el-dropdown-item command="MyHome">个人信息</el-dropdown-item>
             <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
           </el-dropdown-menu>
@@ -83,7 +82,6 @@
       //   _this.currentUserName = '游客';
       // });
       var user = window.sessionStorage.getItem('user');
-      console.log(user);
       if (user) {
         user = JSON.parse(user); 
         _this.currentUserName = user.user_name;

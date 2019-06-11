@@ -83,6 +83,7 @@
 <script>
   import {putRequest} from '../utils/api'
   import {getRequest} from '../utils/api'
+  import {deleteRequest} from '../utils/api'
 //  import Vue from 'vue'
 //  var bus = new Vue()
 
@@ -176,17 +177,12 @@
           type: 'warning'
         }).then(() => {
           _this.loading = true;
-          var url = '';
-          if (_this.state == -2) {
-            url = "/admin/article/dustbin";
-          } else {
-            url = "/article/dustbin";
-          }
-          putRequest(url, {aids: _this.dustbinData, state: state}).then(resp=> {
+          var url = '/article/delete/' + state;
+          deleteRequest(url, _this.dustbinData).then(resp=> {
             if (resp.status == 200) {
               var data = resp.data;
               _this.$message({type: data.status, message: data.msg});
-              if (data.status == 'success') {
+              if (data.status == '200') {
                 window.bus.$emit('blogTableReload')//通过选项卡都重新加载数据
               }
             } else {

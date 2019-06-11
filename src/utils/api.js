@@ -46,9 +46,13 @@ export const putRequest = (url, params) => {
     }
   });
 }
-export const deleteRequest = (url) => {
+export const deleteRequest = (url, params) => {
   return axios({
     method: 'delete',
+    data:params,
+    headers: {
+      'Content-Type': 'application/json'
+    },
     url: `${base}${url}`
   });
 }

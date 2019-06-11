@@ -90,11 +90,11 @@
           cancelButtonText: '取消'
         }).then(()=> {
           var selItems = _this.selItems;
-          var ids = '';
+          var ids = [];
           for (var i = 0; i < selItems.length; i++) {
-            ids += selItems[i].id + ",";
+            ids.push(selItems[i].id);
           }
-          _this.deleteCate(ids.substring(0, ids.length - 1));
+          _this.deleteCate(ids);
         }).catch(() => {
           //取消
           _this.loading = false;
@@ -145,18 +145,21 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          _this.deleteCate(row.id);
+          var ids = [row.id];
+          _this.deleteCate(ids);
         }).catch(() => {
           //取消
           _this.loading = false;
         });
       },
       deleteCate(ids){
+        console.log(ids);
         var _this = this;
         this.loading = true;
         //删除
-        deleteRequest("/admin/category/" + ids).then(resp=> {
+        deleteRequest("/cate/del", ids).then(resp=> {
           var json = resp.data;
+          console.log(json);
           _this.$message({
             type: json.status,
             message: json.msg

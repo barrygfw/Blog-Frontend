@@ -55,11 +55,6 @@
           _this.loading = false;
           if (resp.status == 200) {
             _this.article = resp.data.data;
-            var tags = resp.data.tags;
-            _this.article.dynamicTags = []
-            for (var i = 0; i < tags.length; i++) {
-              _this.article.dynamicTags.push(tags[i].tagName)
-            }
           } else {
             _this.$message({type: 'error', message: '页面加载失败!'})
           }
@@ -83,17 +78,31 @@
         }
         var _this = this;
         _this.loading = true;
-        postRequest("/article/", {
-          id: _this.article.id,
-          title: _this.article.title,
-          mdContent: _this.article.mdContent,
-          htmlContent: _this.$refs.md.d_render,
-          cid: _this.article.cid,
-          state: state,
-          dynamicTags: _this.article.dynamicTags
-        }).then(resp=> {
+        var url = "";
+        if (_this.article.id == -1){
+          url = "/article/create";
+          var data = {
+            title: _this.article.title,
+            mdContent: _this.article.mdContent,
+            htmlContent: _this.$refs.md.d_render,
+            cid: _this.article.cid,
+            state: state,
+            uid: JSON.parse(window.sessionStorage.getItem('user')).id
+          }
+        }else {
+          url = "/article/update";
+          var data = {
+            id: _this.article.id,
+            title: _this.article.title,
+            mdContent: _this.article.mdContent,
+            htmlContent: _this.$refs.md.d_render,
+            cid: _this.article.cid,
+            state: state
+          }
+        }
+        postRequest(url, data).then(resp=> {
           _this.loading = false;
-          if (resp.status == 200 && resp.data.status == 'success') {
+          if (resp.status == 200 && resp.data.status == '200') {
             _this.article.id = resp.data.msg;
             _this.$message({type: 'success', message: state == 0 ? '保存成功!' : '发布成功!'});
 //            if (_this.from != undefined) {
@@ -128,26 +137,16 @@
       },
       getCategories(){
         let _this = this;
-        getRequest("/admin/category/all").then(resp=> {
-          _this.categories = resp.data;
+        getRequest("/cate/all").then(resp=> {
+          console.log(resp.data.data);
+          _this.categories = resp.data.data;
         });
-      },
-      handleClose(tag) {
-        this.article.dynamicTags.splice(this.article.dynamicTags.indexOf(tag), 1);
       },
       showInput() {
         this.tagInputVisible = true;
         this.$nextTick(_ => {
           this.$refs.saveTagInput.$refs.input.focus();
         });
-      },
-      handleInputConfirm() {
-        let tagValue = this.tagValue;
-        if (tagValue) {
-          this.article.dynamicTags.push(tagValue);
-        }
-        this.tagInputVisible = false;
-        this.tagValue = '';
       }
     },
     data() {

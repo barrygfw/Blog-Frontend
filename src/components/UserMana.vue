@@ -34,8 +34,8 @@
             <span>用户状态:</span>
             <el-switch
               v-model="user.status"
-              active-value="false"
-              inactive-value="true"
+              active-value="1"
+              inactive-value="0"
               active-text="启用"
               active-color="#13ce66"
               @change="enabledChange(user.status,user.id,index)"
@@ -141,8 +141,10 @@
           type: 'warning'
         }).then(() => {
           _this.loading = true;
-          deleteRequest("/admin/user/" + id).then(resp=> {
-            if (resp.status == 200 && resp.data.status == 'success') {
+          var ids = [id];
+          console.log(ids);
+          deleteRequest("/user/delete", ids).then(resp=> {
+            if (resp.status == 200 && resp.data.status == '200') {
               _this.$message({type: 'success', message: '删除成功!'})
               _this.loadUserList();
               return;
@@ -213,7 +215,9 @@
       },
       loadUserList(){
         var _this = this;
-        getRequest("/user/searchByName?nickname="+this.keywords).then(resp=> {
+        var url = "/user/searchByName?name="+this.keywords;
+        console.log(url);
+        getRequest(url).then(resp=> {
           _this.loading = false;
           if (resp.status == 200) {
             _this.users = resp.data;

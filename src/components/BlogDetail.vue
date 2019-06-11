@@ -12,12 +12,7 @@
           <div style="display: inline; color: #20a0ff;margin-left: 50px;margin-right:20px;font-size: 12px;">
             {{article.nickname}}
           </div>
-          <span style="color: #20a0ff;margin-right:20px;font-size: 12px;">浏览 {{article.pageView==null?0:article.pageView}}</span>
           <span style="color: #20a0ff;margin-right:20px;font-size: 12px;"> {{article.editTime | formatDateTime}}</span>
-          <el-tag type="success" v-for="(item,index) in article.tags" :key="index" size="small"
-                  style="margin-left: 8px">{{item.tagName}}
-          </el-tag>
-          <span style="margin:0px 50px 0px 0px"></span>
         </div>
       </div>
     </el-col>
