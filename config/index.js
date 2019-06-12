@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/': {
-        target: 'http://localhost:8888',
+        target: 'http://yapi.ascoder.cn',
         changeOrigin: true,
         pathRewrite: {
           '^/': ''
