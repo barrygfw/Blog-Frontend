@@ -17,6 +17,24 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'ViewHome',
+      hidden: true,
+      component: () => import('../views/ViewHome.vue'),
+    },
+    {
+      path: '/category',
+      name: 'Category',
+      hidden: true,
+      component: () => import('../views/Category.vue'),
+    },
+    {
+      path: '/author',
+      name: 'author',
+      hidden: true,
+      component: () => import('../views/Author.vue'),
+    },
+    {
+      path: '/',
       name: '登录',
       hidden: true,
       component: Login,
