@@ -166,7 +166,7 @@
         var user = JSON.parse(window.sessionStorage.getItem('user'));
         var uid = user.id;
         url =
-          '/article/all?state=' +
+          '/article/all?cid=0&state=' +
           this.state +
           '&uid=' +
           uid +

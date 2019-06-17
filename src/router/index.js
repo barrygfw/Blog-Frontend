@@ -34,7 +34,13 @@ export default new Router({
       component: () => import('../views/Author.vue'),
     },
     {
-      path: '/',
+      path: '/detail',
+      name: 'detail',
+      hidden: true,
+      component: () => import('../views/Detail.vue'),
+    },
+    {
+      path: '/login',
       name: '登录',
       hidden: true,
       component: Login,
